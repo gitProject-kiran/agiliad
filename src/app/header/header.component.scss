@@ -1,0 +1,35 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.header{
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.header-fixed{
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+.agiliad-home{
+  width: 154px; 
+  font-size: 25px; 
+  font-weight: 800;
+}
+
+.agiliad-text{
+  line-height: 17px;
+  font-size: 28px;
+}
+
+@media (max-width: 599px){
+  .mobile-m-left{
+    margin-left: -30px;
+  }
+}
