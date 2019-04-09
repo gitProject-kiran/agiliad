@@ -4,6 +4,7 @@ const config = require('../config'); // get our config file
 const _ = require('lodash');
 var moment = require('moment');
 const uuidv4 = require('uuid/v4');
+var nodemailer = require('nodemailer');
 
 function createToken(user) {
     const payload = {
@@ -76,4 +77,46 @@ module.exports = function(router){
             }
         });
     });
+
+    router.get('/resetPassword', (req, res) => {
+        var resetPasswordQuery = "SELECT * FROM user WHERE email = '" + req.query.emailId + "'";
+        db.query(resetPasswordQuery, function (err, result) {
+            if (err) {
+                console.log("err ", err);
+                res.status(400).send({ message: "Server issue!!" })
+            } else { 
+                if(_.size(result) > 0){
+
+                    var transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                          user: 'kiran.shinde.git@gmail.com',
+                          pass: 'Jamshift@123'
+                        }
+                      });
+                      
+                      var mailOptions = {
+                        from: 'kiran.shinde.git@gmail.com',
+                        to: result[0].email,
+                        subject: 'Reset Password!!',
+                        text: 'Your password is: ' + result[0].password
+                      };
+                      
+                      transporter.sendMail(mailOptions, function(error, info){
+                        if (error) {
+                          console.log(error);
+                          res.status(400).send({message:'Email sender has issue!!'});
+                        } else {
+                          console.log('Email sent: ' + info.response);
+                          res.status(200).send({message:'Succesfully reset password. Please check your email address!!'});
+                        }
+                      });
+                    
+                }else{
+                    res.status(400).send({message:'Email address not found!!'});
+                }                  
+                
+            }
+        }); 
+    })
 }
