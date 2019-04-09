@@ -39,6 +39,10 @@ export class LoginService {
         );
     }
 
+    resetPassword(data){
+        return this.http.get('/api/resetPassword?emailId='+ data.EmailId);
+    }
+
     clearLocalStorage(){
         localStorage.removeItem('token');
     }

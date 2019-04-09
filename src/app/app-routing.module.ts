@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/app/shared/services/auth.guard';
 
 const routes: Routes = [ 
   { 
-    path: 'login', 
+    path: 'authentication', 
     loadChildren: './authentication/authentication.module#AuthenticationModule' 
   },{ 
     path: 'admin', 
@@ -12,10 +12,10 @@ const routes: Routes = [
     data: { breadcrumb: 'Homepage'} 
   },{ 
     path: '**', 
-    redirectTo: 'login' 
+    redirectTo: 'authentication' 
   },{ 
     path: '', 
-    redirectTo: 'login', 
+    redirectTo: 'authentication', 
     pathMatch: 'full' 
   }];
 

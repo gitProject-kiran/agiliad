@@ -15,7 +15,15 @@
             Please inform your password
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary">Login</button>
+
+        <button class="m-1" mat-raised-button style="width: 100%;" color="primary">
+          <mat-icon title="Logout">lock_open</mat-icon> LOG IN
+        </button>
+
+        <p class="mb-4">
+          <a style="float:left;" mat-button [routerLink]="['/authentication/reset-password']" color="primary">Reset Password?</a>
+          <a style="float:right;" mat-button routerLink="." color="primary">Register?</a>
+        </p>
       </form>
     </mat-card-content>
   </mat-card>
