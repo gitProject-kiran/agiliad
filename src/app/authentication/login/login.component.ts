@@ -12,6 +12,7 @@ import * as crypto from 'crypto-js';
 })
 
 export class LoginComponent implements OnInit {
+  hide = true;
   returnUrl: any;
   form: FormGroup;                    // {1}
   private formSubmitAttempt: boolean; // {2}

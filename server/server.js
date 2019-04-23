@@ -53,6 +53,7 @@ require('./routes/connection')
 require('./routes/api');
 require('./routes/login')(router);
 require('./routes/product-management')(router);
+require('./routes/order-management')(router);
 
 // Set our api routes
 app.use('/api', router);

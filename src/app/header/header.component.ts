@@ -30,6 +30,10 @@ export class HeaderComponent {
   visible: boolean = false;
   matcher = new MyErrorStateMatcher();
 
+  oldPasswordHide = true;
+  passwordHide = true;
+  confirmPasswordHide = true;
+
   constructor(
     private sidenav: SidenavService,
     private login: LoginService,

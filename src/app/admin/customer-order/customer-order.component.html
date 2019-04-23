@@ -1,0 +1,92 @@
+<div class="card box-shadow">
+  <div class="card-body">
+    <div class="fluid-container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h5>FILTER PRODUCT</h5>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <form [formGroup]="modelForm" class="example-form" (ngSubmit)="onSubmit(modelForm)">
+        <div class="row mt-2">
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Brand</mat-label>
+              <mat-select formControlName="brandControl" (ngModelChange)="getModels(modelForm)" required>
+                <mat-option *ngFor="let brand of brands" [value]="brand.brand_name">
+                  {{brand.brand_name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="modelForm.hasError('required','brandControl')">Please choose an brand</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Product</mat-label>
+              <mat-select formControlName="productControl" (ngModelChange)="getModels(modelForm)" required>
+                <mat-option *ngFor="let product of products" [value]="product.product_name">
+                  {{product.product_name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="modelForm.hasError('required','productControl')">Please choose an product</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Model</mat-label>
+              <mat-select formControlName="modelControl" [(value)]="selected" required>
+                <mat-option *ngFor="let model of models" [value]="model">
+                  {{model.model_name}}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="selected">MRP Price : {{selected.mrp_price}}</mat-hint>
+              <mat-error *ngIf="modelForm.hasError('required','modelControl')">Please choose an model</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Enter Quantity</mat-label>
+              <input matInput type="number" min="1" placeholder="Enter Quantity" formControlName="quantityControl" required>
+              <mat-error *ngIf="modelForm.hasError('required','quantityControl')">Please enter Quantity</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Enter price</mat-label>
+              <input matInput type="number" placeholder="Enter Price" formControlName="priceControl" required>
+              <mat-error *ngIf="modelForm.hasError('required','priceControl')">Please enter price</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Date</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateControl" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+              <mat-error *ngIf="modelForm.hasError('required','dateControl')">Please select date</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div class="offset-sm-8 col-sm-4">
+          <button type="submit" class="mt-2 full-width" mat-raised-button color="primary">
+            <mat-icon title="Submit">send</mat-icon> Add to cart
+          </button>
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@ export interface Item {
 }
 
 import { NgControl } from '@angular/forms';
+import { ProductManagementService } from 'src/app/admin/_service/product-management.service';
 
 @Directive({
   selector: '[disableControl]'
@@ -66,13 +67,14 @@ export class AddProductsComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    private productManagementService: ProductManagementService) {
 
     //Add Model
     this.addModelForm = this.formBuilder.group({
-      brandControl: [{value:''}, [Validators.required]],
-      productControl: [{value:''}, [Validators.required]],
-      modelNo: [{value:''}, [Validators.required]],
+      brandControl: ['', [Validators.required]],
+      productControl: ['', [Validators.required]],
+      modelNo: ['', [Validators.required]],
       mrpPrice: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       sgst: ['', [Validators.required]],
@@ -113,7 +115,7 @@ export class AddProductsComponent implements OnInit {
   }
 
   public getAllBrands = () => {
-    this.http.get('api/brands')
+    this.productManagementService.getAllBrands()
       .subscribe(formData => {
         for (var i = 0; i < _.size(formData['result']); i++) {
           this.brands.push(formData['result'][i]['brand_name'])
@@ -179,7 +181,6 @@ export class AddProductsComponent implements OnInit {
   }
 
   resetModelForm(addModel, addModelForm) {
-    addModel.hide();
     this.addModelForm.reset();
     let control: AbstractControl = null;
     this.addModelForm.markAsUntouched();
@@ -187,6 +188,8 @@ export class AddProductsComponent implements OnInit {
       control = this.addModelForm.controls[name];
       control.setErrors(null);
     });
+    addModel.hide();
+    this.isUpdateModel = false;
   }
 
   applyFilter(filterValue: string) {

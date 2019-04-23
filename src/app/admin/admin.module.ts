@@ -9,9 +9,17 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddProductsComponent, DisableControlDirective } from './add-products/add-products.component';
 import { AngularMaterialModule } from 'src/app/shared/angular-material/angular-material.module';
+import { CustomerOrderComponent } from './customer-order/customer-order.component';
+import { ProductManagementService } from 'src/app/admin/_service/product-management.service';
 
 @NgModule({
-  declarations: [MainPageComponent, DashboardComponent, AddProductsComponent, DisableControlDirective],
+  declarations: [
+    MainPageComponent, 
+    DashboardComponent, 
+    AddProductsComponent, 
+    DisableControlDirective, 
+    CustomerOrderComponent
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,
@@ -24,6 +32,9 @@ import { AngularMaterialModule } from 'src/app/shared/angular-material/angular-m
     LayoutModule,
     SharedModule,
     FormsModule
+  ],
+  providers: [
+    ProductManagementService
   ]
 })
 export class AdminModule { }

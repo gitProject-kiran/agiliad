@@ -6,6 +6,11 @@
   <button *ngIf="login.isLoggedIn" mat-icon-button (click)="sidenav.toggle()" fxShow.sm="true" fxShow.gt-sm="false" style="margin-left:4%;">
     <mat-icon>menu</mat-icon>
   </button>
+
+  <button *ngIf="login.isLoggedIn && !isVerticalMenu" [routerLink]="['/admin/order']" mat-icon-button fxShow.sm="true" fxShow.gt-sm="false"
+    style="margin-left:4%;">
+    <h5>order</h5>
+  </button>
   <span class="spacer"></span>
 
   <ng-container *ngIf="isVerticalMenu">
@@ -64,8 +69,6 @@
         <mat-icon class="ml-3" title="Logout" routerLink="/login" (click)="login.logout();">exit_to_app</mat-icon>
       </button>
 
-
-
     </ng-container>
   </ng-container>
 
@@ -85,21 +88,24 @@
         <form [formGroup]="myForm" (ngSubmit)="onSubmit(changePassword)">
 
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Old password" formControlName="oldPassword" required>
+            <input matInput placeholder="Old password" formControlName="oldPassword" [type]="oldPasswordHide ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="oldPasswordHide = !oldPasswordHide">{{oldPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="myForm.hasError('required', 'oldPassword')">
               Please enter your old password
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="New password" formControlName="password" required>
+            <input matInput placeholder="New password" formControlName="password" [type]="passwordHide ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="myForm.hasError('required', 'password')">
               Please enter your new password
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Confirm password" formControlName="confirmPassword" [errorStateMatcher]="matcher">
+            <input matInput placeholder="Confirm password" formControlName="confirmPassword" [errorStateMatcher]="matcher" [type]="confirmPasswordHide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="confirmPasswordHide = !confirmPasswordHide">{{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="myForm.hasError('notSame')">
               Passwords do not match
             </mat-error>

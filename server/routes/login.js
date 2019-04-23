@@ -24,6 +24,8 @@ module.exports = function (router) {
         // Decrypt
         var bytes  = CryptoJS.AES.decrypt(property.password, 'secret key 123');
         property.password = bytes.toString(CryptoJS.enc.Utf8);
+
+        console.log("property.password ===>", property.password);
         let query = "SELECT * FROM user WHERE username = '" + property.userName + "' and BINARY password = '" + property.password + "'";
         db.query(query, function (err, result) {
             if (err) {
