@@ -8,10 +8,12 @@ import { ErrorDialogService } from './services/errordialog.service';
 import { AngularMaterialModule } from 'src/app/shared/angular-material/angular-material.module';
 import { SidenavService } from 'src/app/shared/services/sidenav.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
-    ErrordialogComponent
+    ErrordialogComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalComponent
   ],
   entryComponents: [
     ErrordialogComponent

@@ -67,5 +67,19 @@
         position: fixed;
         margin-top: 56px;
       }
-  }  
+  }
+  
+  
+  ::ng-deep .mat-drawer-content{
+    overflow: hidden !important;
+    z-index: unset  !important;
+  }
+
+  @media (max-width: 599px){
+    ::ng-deep .mat-drawer-content{
+      z-index: 1  !important;
+    }
+  }
+
+
 

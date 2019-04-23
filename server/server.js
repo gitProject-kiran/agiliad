@@ -52,6 +52,7 @@ router.get('/getCookies', function(req, res){
 require('./routes/connection')
 require('./routes/api');
 require('./routes/login')(router);
+require('./routes/product-management')(router);
 
 // Set our api routes
 app.use('/api', router);

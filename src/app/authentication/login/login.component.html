@@ -16,8 +16,15 @@
           </mat-error>
         </mat-form-field>
 
-        <button class="m-1" mat-raised-button style="width: 100%;" color="primary">
-          <mat-icon title="Logout">lock_open</mat-icon> LOG IN
+        <div class="capcha-w mt-2">
+          <ngx-recaptcha2 #captchaElem [siteKey]="'6Lemkp0UAAAAABuby0jhlY-AxSvHE2sX582l2zd1'" (reset)="handleReset()" (expire)="handleExpire()"
+            (load)="handleLoad()" (success)="handleSuccess($event)" [useGlobalDomain]="false" [size]="size" [hl]="lang" [theme]="theme"
+            [type]="type" formControlName="recaptcha">
+          </ngx-recaptcha2>
+        </div>
+
+        <button class="mt-2" mat-raised-button style="width: 100%;" color="primary">
+          <mat-icon title="Log in">lock_open</mat-icon> LOG IN
         </button>
 
         <p class="mb-4">
@@ -28,3 +35,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+

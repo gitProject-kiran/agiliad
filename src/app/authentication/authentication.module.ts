@@ -5,6 +5,7 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [LoginComponent, ResetPasswordComponent],
@@ -12,7 +13,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CommonModule,
     AuthenticationRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxCaptchaModule
   ]
 })
 export class AuthenticationModule { }

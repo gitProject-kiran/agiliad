@@ -16,6 +16,10 @@
           <mat-icon>account_circle</mat-icon>
           <span>My Account</span>
         </button>
+        <button mat-menu-item data-toggle="modal" data-target="#myModal">
+          <mat-icon>account_circle</mat-icon>
+          <span>Change Password</span>
+        </button>
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
@@ -42,6 +46,10 @@
           <mat-icon>account_circle</mat-icon>
           <span>My Account</span>
         </button>
+        <button mat-menu-item (click)="changePassword.show();">
+          <mat-icon>account_circle</mat-icon>
+          <span>Change Password</span>
+        </button>
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>Settings</span>
@@ -53,10 +61,62 @@
       </mat-menu>
 
       <button mat-button>
-          <mat-icon class="ml-3" title="Logout" routerLink="/login" (click)="login.logout();">exit_to_app</mat-icon>
+        <mat-icon class="ml-3" title="Logout" routerLink="/login" (click)="login.logout();">exit_to_app</mat-icon>
       </button>
-      
+
+
+
     </ng-container>
   </ng-container>
 
 </mat-toolbar>
+
+<app-modal #changePassword [dialogClass]="'modal-md'" [closeBackdrop]="false" [hideFooter]="true" style="margin-top: 80px;">
+  <div class="app-modal-header">
+    <h6 class="modal-title">CHANGE PASSWORD</h6>
+    <button type="button" class="close basic-close" (click)="changePassword.hide();myForm.reset();" style="color:white;top:15px;">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <div class="container">
+      <div class="row">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit(changePassword)">
+
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Old password" formControlName="oldPassword" required>
+            <mat-error *ngIf="myForm.hasError('required', 'oldPassword')">
+              Please enter your old password
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="New password" formControlName="password" required>
+            <mat-error *ngIf="myForm.hasError('required', 'password')">
+              Please enter your new password
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Confirm password" formControlName="confirmPassword" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="myForm.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+
+          <span class="spacer"></span>
+          <div class="text-right">
+            <button class="mt-2" mat-raised-button color="accent">
+              <mat-icon title="Cancel">cancel</mat-icon> Cancel
+            </button>
+            <button class="mt-2 ml-1" mat-raised-button color="primary">
+              <mat-icon title="Submit">send</mat-icon> Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</app-modal>

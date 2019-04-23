@@ -43,6 +43,10 @@ export class LoginService {
         return this.http.get('/api/resetPassword?emailId='+ data.EmailId);
     }
 
+    changePassword(data){
+        return this.http.post('/api/changePassword', data);
+    }
+    
     clearLocalStorage(){
         localStorage.removeItem('token');
     }

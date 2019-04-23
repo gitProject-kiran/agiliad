@@ -49,7 +49,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
                     this.loginService.logout();
                     location.reload(true);
                 }
-
+                
                 let data = {
                     reason: error && error.error.reason ? error.error.reason : error && error.statusText ? error.statusText : '',
                     status: error.status

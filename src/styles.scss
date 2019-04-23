@@ -5,3 +5,16 @@ body{
     background-color: #fafafa !important;
     color: rgba(0,0,0,.87);
 }
+.modal-header {
+    background-color: rgba(19, 31, 107, 0.83);
+    color: white;
+}
+
+.card{
+    margin: 10px;
+}
+
+.modal {
+    z-index: 99999999999;
+  }
+  
