@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ProductManagementService } from 'src/app/admin/_service/product-management.service';
 import { MatSnackBar } from '@angular/material';
 
@@ -19,6 +19,13 @@ export class CustomerOrderComponent implements OnInit {
     private snackBar: MatSnackBar,
     private productManagementService: ProductManagementService
   ) { 
+    
+    this.setForm();
+    this.getAllBrands();
+    this.getAllProducts();
+  }
+
+  setForm(){
     this.modelForm = this.formBuilder.group({
       brandControl: ['', [Validators.required]],
       productControl: ['', [Validators.required]],
@@ -27,9 +34,20 @@ export class CustomerOrderComponent implements OnInit {
       priceControl: ['', [Validators.required]],
       dateControl: ['', [Validators.required]],
     });
+  }
+  panelOpenState = false;
+  step = 0;
 
-    this.getAllBrands();
-    this.getAllProducts();
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
   }
 
   ngOnInit() {}
@@ -49,9 +67,12 @@ export class CustomerOrderComponent implements OnInit {
   }
 
   getModels(modelForm){
+    this.selected='';
     //Validating both ara selected or not
-    if(!modelForm.value.brandControl || !modelForm.value.productControl){
-      this.snackBar.open(modelForm.value.brandControl ? 'Select Product' :  'Select Brand', 'Error');
+    if(!modelForm.value.brandControl || !modelForm.value.productControl ){
+      if(!modelForm.value.brandControl){
+        this.snackBar.open(modelForm.value.brandControl ? 'Select Product' :  'Select Brand', 'Error');
+      }
       return;
     } 
 
@@ -62,8 +83,26 @@ export class CustomerOrderComponent implements OnInit {
     console.log("===>", modelForm);
   }
 
+  resetModelForm() {    
+    this.modelForm.reset();
+    let control: AbstractControl = null;
+    this.modelForm.markAsUntouched();
+    Object.keys(this.modelForm.controls).forEach((name) => {
+      control = this.modelForm.controls[name];
+      control.setErrors(null);
+    });
+    this.selected='';
+  }
+
+  cart = [];
   onSubmit(filterForm){
-    console.log("===", filterForm);
+    console.log("added",filterForm.valid)
+    if(filterForm.valid){
+      this.snackBar.open('Successfully added product into cart', 'Success');
+      this.cart.push(filterForm.value);
+      filterForm.reset();;
+      this.resetModelForm();
+    }
   }
 
 }

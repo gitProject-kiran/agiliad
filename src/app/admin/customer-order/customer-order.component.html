@@ -1,4 +1,4 @@
-<div class="card box-shadow">
+<!-- <div class="card box-shadow">
   <div class="card-body">
     <div class="fluid-container">
       <div class="row">
@@ -89,4 +89,229 @@
 
     </div>
   </div>
+</div> -->
+
+<div class="fluid-container m-3">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>filter</mat-icon> FILTER PRODUCT
+        </mat-panel-title>
+        <mat-panel-description>
+          Select product and add to cart
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- Start filter product -->
+      <form [formGroup]="modelForm" class="example-form" (ngSubmit)="onSubmit(modelForm); modelForm.reset().markAsUntouched()">
+        <div class="row m-2">
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Brand</mat-label>
+              <mat-select formControlName="brandControl" (ngModelChange)="getModels(modelForm)" required>
+                <mat-option *ngFor="let brand of brands" [value]="brand.brand_name">
+                  {{brand.brand_name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="modelForm.hasError('required','brandControl')">Please choose an brand</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Product</mat-label>
+              <mat-select formControlName="productControl" (ngModelChange)="getModels(modelForm)" required>
+                <mat-option *ngFor="let product of products" [value]="product.product_name">
+                  {{product.product_name}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="modelForm.hasError('required','productControl')">Please choose an product</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Model</mat-label>
+              <mat-select formControlName="modelControl" [(value)]="selected" required>
+                <mat-option *ngFor="let model of models" [value]="model">
+                  {{model.model_name}}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="selected">MRP Price : {{selected.mrp_price}}</mat-hint>
+              <mat-error *ngIf="modelForm.hasError('required','modelControl')">Please choose an model</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Enter Quantity</mat-label>
+              <input matInput type="number" min="1" placeholder="Enter Quantity" formControlName="quantityControl" required>
+              <mat-error *ngIf="modelForm.hasError('required','quantityControl')">Please enter Quantity</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Enter price</mat-label>
+              <input matInput type="number" placeholder="Enter Price" formControlName="priceControl" required>
+              <mat-error *ngIf="modelForm.hasError('required','priceControl')">Please enter price</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-4">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Date</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateControl" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+              <mat-error *ngIf="modelForm.hasError('required','dateControl')">Please select date</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="offset-sm-8 col-sm-4">
+            <button type="submit" class="m-1 full-width" mat-raised-button color="primary">
+              <mat-icon title="Submit">add_shopping_cart</mat-icon> Add to cart
+            </button>
+          </div>
+        </div>
+
+
+
+      </form>
+      <!-- End filter product -->
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>shopping_cart</mat-icon> REVIEW CART
+        </mat-panel-title>
+        <mat-panel-description>
+          List of selected products
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="container mb-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col"> </th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Available</th>
+                    <th scope="col" class="text-center">Quantity</th>
+                    <th scope="col" class="text-right">Price</th>
+                    <th scope="col" class="text-center">Action </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of cart">
+                    <td>
+                      <img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                    <td>
+                      Product Name: {{item.productControl}}
+                      <br> Model No: {{item.modelControl.model_name}}, {{item.brandControl}}
+                    </td>
+                    <td>{{item.modelControl.quantity > 0 ? 'In stock' : 'Out of Stock'}}</td>
+                    <td>
+                      <input class="form-control" type="text" value="{{item.quantityControl}}" />
+                    </td>
+                    <td class="text-right">{{item.priceControl}}</td>
+                    <td class="text-center">
+                      <button mat-icon-button color="warn">
+                        <mat-icon class="mat-18">delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Sub-Total</td>
+                    <td class="text-right">255,90 €</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Shipping</td>
+                    <td class="text-right">6,90 €</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <strong>Total</strong>
+                    </td>
+                    <td class="text-right">
+                      <strong>346,90 €</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col mb-2">
+            <div class="row">
+              <div class="offset-md-6 col-sm-12 col-md-6 text-right">
+                <button type="submit" class="m-1 full-width" mat-raised-button color="primary" style="background:green;">
+                  <mat-icon title="CHECKOUT">shopping_cart</mat-icon> CHECKOUT
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>place</mat-icon> CUSTOMER ADDRESS
+        </mat-panel-title>
+        <mat-panel-description>
+          Inform your shipping address
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>receipt</mat-icon> INVOICE
+        </mat-panel-title>
+        <mat-panel-description>
+          Invoice ready to print
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">End</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+  </mat-accordion>
 </div>

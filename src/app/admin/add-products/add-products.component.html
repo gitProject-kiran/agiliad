@@ -41,7 +41,7 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
-    <button mat-raised-button class="add-model" color="primary" (click)="addModel.show()">
+    <button mat-raised-button class="add-model" color="primary" (click)="openAddModel(addModel)">
       <mat-icon class="mat-18">add</mat-icon> Add Model
     </button>
 

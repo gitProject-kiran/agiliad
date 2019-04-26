@@ -180,6 +180,17 @@ export class AddProductsComponent implements OnInit {
       })
   }
 
+  openAddModel(addModel){
+    addModel.show();
+    this.addModelForm.reset();
+    let control: AbstractControl = null;
+    this.addModelForm.markAsUntouched();
+    Object.keys(this.addModelForm.controls).forEach((name) => {
+      control = this.addModelForm.controls[name];
+      control.setErrors(null);
+    });
+  }
+
   resetModelForm(addModel, addModelForm) {
     this.addModelForm.reset();
     let control: AbstractControl = null;
