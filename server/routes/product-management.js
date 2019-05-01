@@ -83,7 +83,8 @@ module.exports = function (router) {
                         if (err) {
                             res.status(400).send({ message: "Something went wrong inserting insertProduct, Please try again!!" })
                         } else {
-                            gotBrandId(req, res, brandId, productResult[0].product_id, fields);
+                            console.log("product =?", productResult);
+                            gotProductId(req, res, brandId, productResult.insertId, fields);
                         }
                     });
                 }
@@ -106,7 +107,7 @@ module.exports = function (router) {
                         if (err) {
                             res.status(400).send({ message: "Something went wrong inserting brand id, Please try again!!" })
                         } else {
-                            gotBrandId(req, res, brandResult[0].brand_id, fields);
+                            gotBrandId(req, res, brandResult.insertId, fields);
                         }
                     });
                 }

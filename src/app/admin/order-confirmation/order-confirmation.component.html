@@ -113,7 +113,7 @@
                     <p style="margin-bottom: 0;"><strong>Model No : </strong> {{product.model_name}} {{product.brand_name}}</p>
                   </td>
                   <td class="text-center">{{product.quantity}}</td>
-                  <td class="text-center">{{product.price}}</td>
+                  <td class="text-center">{{getPrice(product.price, product.cgst, product.sgst)}}</td>
                   <td class="text-center">{{product.cgst}}%</td>
                   <td class="text-center">{{product.sgst}}%</td>
                   <td class="text-center">{{rowTotal(product)}}</td>

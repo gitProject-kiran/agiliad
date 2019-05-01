@@ -34,21 +34,20 @@ export class OrderConfirmationComponent implements OnInit {
     return (price * gstRate) / 100;
   }
 
-  getSgst() {
-
+  getPrice(price, cgst, sgst){
+    let c = (price * cgst) / 100;
+    let s = (price * sgst) / 100;
+    return price - c - s;
   }
 
   rowTotal(product) {
-    let totalItemCost = product['price'] * product['quantity'];
-    let sgst = this.getGst(product['sgst'], totalItemCost);
-    let cgst = this.getGst(product['cgst'], totalItemCost);
-    return totalItemCost + sgst + cgst;
+    return product['price'] * product['quantity'];
   }
 
   getTotal() {
     let total = 0;
     for (var i = 0; i < _.size(this.productDetails); i++) {
-      total = total + this.rowTotal(this.productDetails[i])
+      total = total + (this.productDetails[i].price * this.productDetails[i].quantity);
     }
     return total;
   }

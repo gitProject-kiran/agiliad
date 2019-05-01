@@ -37,7 +37,8 @@ export class AddressComponent implements OnInit {
 
   onSubmit(formDetails){
     if(formDetails.valid){
-      this.addressOutput.emit(formDetails.value);
+      console.log("formDetails.value", formDetails.value);
+    this.addressOutput.emit(formDetails.value);
     }
   }
 
