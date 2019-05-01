@@ -11,6 +11,8 @@ import { AddProductsComponent, DisableControlDirective } from './add-products/ad
 import { AngularMaterialModule } from 'src/app/shared/angular-material/angular-material.module';
 import { CustomerOrderComponent } from './customer-order/customer-order.component';
 import { ProductManagementService } from 'src/app/admin/_service/product-management.service';
+import { AddressComponent } from './address/address.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,7 @@ import { ProductManagementService } from 'src/app/admin/_service/product-managem
     DashboardComponent, 
     AddProductsComponent, 
     DisableControlDirective, 
-    CustomerOrderComponent
+    CustomerOrderComponent, AddressComponent, OrderConfirmationComponent
   ],
   imports: [
     CommonModule,

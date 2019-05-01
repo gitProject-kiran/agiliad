@@ -1,0 +1,168 @@
+<div class="card box-shadow">
+  <div class="card-body">
+    <div class="container">
+      <div class="jumbotron text-center">
+        <h1 class="title text-uppercase">Thank you for your order!!</h1>
+        <p class="text-uppercase content">Please download invoice with clicking on download button.</p>
+        <p>
+          <button mat-raised-button color="primary" (click)="print()">
+            <mat-icon>save_alt</mat-icon> Download Invoice
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="print-section" *ngIf="custAddress" style="display:none">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-sm-12">
+        <strong> TAX INVOICE </strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="container border">
+    <div class="row">
+      <div class="col-sm-6 p-0">
+        <div class="owner-add pl-3 pb-3">
+          <strong>ASMITA AGENCIES</strong>
+          <p class="text-uppercase f-family">Sr.36 Shop No. 1/2,</p>
+          <p class="text-uppercase f-family">Akkale Orchid, Keshav nagar,</p>
+          <p class="text-uppercase f-family">Mundhwa Pune, 411036</p>
+          <p class="text-uppercase f-family">GSTIN/UIN: 27AMEPA4866G2Z3</p>
+          <p class="text-uppercase f-family">City: Pune, MH, Code: 27</p>
+        </div>
+        <div class="owner-add pl-3 pb-3">
+          <strong>{{custAddress.cust_name}}</strong>
+          <p class="text-uppercase f-family" style="width:300px;">{{custAddress.cust_address}}</p>
+          <br>
+          <p class="text-uppercase f-family">GSTIN/UIN: {{custAddress.cust_gst}}</p>
+          <p class="text-uppercase f-family">Mobile No: {{custAddress.cust_phone}}</p>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row bb">
+          <div class="col-sm-6 br">
+            <p class="f-family">Invoice No.</p>
+            <strong>NO.{{productDetails[0].id}}</strong>
+          </div>
+          <div class="col-sm-6">
+            <p class="f-family">Dated.</p>
+            <strong>{{productDetails[0].created_at | date: 'dd/MM/yyyy'}}</strong>
+          </div>
+        </div>
+
+        <div class="row bb">
+          <div class="col-sm-6 br"></div>
+          <div class="col-sm-6">
+            <p class="f-family">Mode/Terms of payment</p>
+            <strong>-</strong>
+          </div>
+        </div>
+
+        <div class="row bb">
+          <div class="col-sm-6 br">
+            <p class="f-family">Supplier's Ref.</p>
+            <strong>NO.{{productDetails[0].id}}</strong>
+          </div>
+          <div class="col-sm-6">
+            <p class="f-family">Other Reference's</p>
+            <strong>-</strong>
+          </div>
+        </div>
+
+        <div class="row bb">
+          <div class="col-sm-6 br">
+            <p class="f-family">Buyer's Order No.</p>
+            <strong>{{productDetails[0].created_at | date: 'MM/yyyy'}} / {{productDetails[0].id}}</strong>
+          </div>
+          <div class="col-sm-6">
+            <p class="f-family">Dated.</p>
+            <strong>{{productDetails[0].created_at | date: 'dd/MM/yyyy'}}</strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p class="f-family">Term's Of Delivery</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-borderless" style="border-left: 1px solid;">
+        <thead>
+          <tr>
+            <th class="text-center">Sr. No.</th>
+            <th>Product Description</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Rate</th>
+            <th class="text-center">CGST</th>
+            <th class="text-center">SGST</th>
+            <th class="text-center"> Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let product of productDetails; let i = index">
+              <tr [ngClass]="{'row-height': i!= (productDetails.length - 1)}" class="row-height">
+                  <td class="text-center">{{i+1}}</td>
+                  <td>
+                    <p style="margin-bottom: 0;"><strong>Product Name : </strong> {{product.product_name}}</p>
+                    <p style="margin-bottom: 0;"><strong>Model No : </strong> {{product.model_name}} {{product.brand_name}}</p>
+                  </td>
+                  <td class="text-center">{{product.quantity}}</td>
+                  <td class="text-center">{{product.price}}</td>
+                  <td class="text-center">{{product.cgst}}%</td>
+                  <td class="text-center">{{product.sgst}}%</td>
+                  <td class="text-center">{{rowTotal(product)}}</td>
+                </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="text-center"></th>
+            <th class="text-right">Total</th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center">Rs.{{getTotal()}}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="f-family">Amount Chargeable (in words)</p>
+        <p><strong>{{getAmountInWords()}}</strong></p>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="f-family" style="text-decoration: underline;">Declaration's</p>
+        <p class="f-family">We declaire that this invoice shows the actual price of the goods described and that all
+          particulars are true and correct.</p>
+
+      </div>
+    </div>
+
+    <div class="row" style="border-top: 1px solid;">
+      <div class="col-sm-6" style="border-right: 1px solid;">
+        <p class="f-family">Customer's Seal and Signature</p><br><br>
+
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="f-family"><strong>For ASHMITA AGENCIES</strong></p><br><br><br>
+        <p class="f-family">Authorised Signature</p>
+      </div>
+    </div>
+
+  </div>
+</div>

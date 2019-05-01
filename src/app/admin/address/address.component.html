@@ -1,0 +1,94 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit(addressForm);">
+  <div class="fluid-container">
+
+    <div class="row m-1">
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter first name</mat-label>
+          <input type="text" matInput placeholder="First Name" formControlName="firstName">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="addressForm.hasError('required','firstName')">Please provide first name</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter last name</mat-label>
+          <input type="text" matInput placeholder="Last Name" formControlName="lastName">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="addressForm.hasError('required','lastName')">Please provide last name</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Mobile Number</mat-label>
+          <input type="number" matInput placeholder="Mobile Number" formControlName="mobileNumber">
+          <mat-icon matPrefix>phone</mat-icon>
+          <mat-error *ngIf="addressForm.hasError('required','mobileNumber')">Please provide mobile number</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter GST Number</mat-label>
+          <input matInput placeholder="GST Number" formControlName="gstNumber">
+          <mat-icon matPrefix>ballot</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Address</mat-label>
+          <input matInput placeholder="Address" formControlName="address">
+          <mat-icon matPrefix>account_balance</mat-icon>
+          <mat-error *ngIf="addressForm.hasError('required','address')">Please provide address</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select City</mat-label>
+          <mat-select formControlName="city" required>
+            <mat-option *ngFor="let city of ['Pune']" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="addressForm.hasError('required','city')">Please choose an city</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select State</mat-label>
+          <mat-select formControlName="state" required>
+            <mat-option *ngFor="let state of ['MH']" [value]="state">
+              {{state}}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="addressForm.hasError('required','state')">Please choose an state</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Pincode</mat-label>
+          <input matInput placeholder="Pincode Number" formControlName="pincode">
+          <mat-icon matPrefix>add_location</mat-icon>
+          <mat-error *ngIf="addressForm.hasError('required','pincode')">Please enter pincode</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Date</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="dateControl" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+          <mat-error *ngIf="addressForm.hasError('required','dateControl')">Please select date</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <mat-action-row>
+    <button mat-button type="button" color="warn" (click)="goToPrevStep()">Back</button>
+    <button type="submit" mat-raised-button color="primary">Place Order</button>
+  </mat-action-row>
+</form>

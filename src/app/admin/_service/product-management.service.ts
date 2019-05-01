@@ -21,4 +21,12 @@ export class ProductManagementService {
   getAllModels(brand_name, product_name){
     return this.http.get('api/getAllModels?product_name='+ product_name +'&brand_name='+ brand_name);
   }
+
+  placeOrder(order){
+    return this.http.post('/api/placeOrder', order);
+  }
+
+  getInvoiceDetails(invoiceId){
+    return this.http.get('api/getInvoiceDetails?invoiceId='+ invoiceId );
+  }
 }

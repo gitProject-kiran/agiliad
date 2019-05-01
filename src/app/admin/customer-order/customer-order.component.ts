@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ProductManagementService } from 'src/app/admin/_service/product-management.service';
 import { MatSnackBar } from '@angular/material';
-
+import _ from 'lodash';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-customer-order',
   templateUrl: './customer-order.component.html',
@@ -14,10 +15,12 @@ export class CustomerOrderComponent implements OnInit {
   brands: Object;
   selected;
   modelForm: FormGroup;
+  deleteId = -1;
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private productManagementService: ProductManagementService
+    private productManagementService: ProductManagementService,
+    private router: Router
   ) { 
     
     this.setForm();
@@ -31,8 +34,7 @@ export class CustomerOrderComponent implements OnInit {
       productControl: ['', [Validators.required]],
       modelControl: ['', [Validators.required]],
       quantityControl: ['', [Validators.required]],
-      priceControl: ['', [Validators.required]],
-      dateControl: ['', [Validators.required]],
+      priceControl: ['', [Validators.required]]
     });
   }
   panelOpenState = false;
@@ -96,13 +98,62 @@ export class CustomerOrderComponent implements OnInit {
 
   cart = [];
   onSubmit(filterForm){
-    console.log("added",filterForm.valid)
     if(filterForm.valid){
-      this.snackBar.open('Successfully added product into cart', 'Success');
+      //Validating every field fill
+      for (let key of Object.keys(filterForm.value)) {  
+        let value = filterForm.value[key];
+        if(_.isNull(value)){
+          this.snackBar.open('Please select '+ key, 'Error');  
+          return;
+        }       
+      }
+      this.snackBar.open('Successfully added product into cart', 'Success');     
       this.cart.push(filterForm.value);
-      filterForm.reset();;
+      console.log("====>", filterForm.value);
       this.resetModelForm();
     }
+  }
+
+  getTotal(){
+    let total = 0;
+    for(let i=0; i<_.size(this.cart); i++){
+      let product = this.cart[i];
+      total = total + (product.priceControl * product.quantityControl);
+    }
+    return total;
+  }
+
+  deleteItemFromCart(deleteModel){
+    deleteModel.hide();
+    this.cart.splice(this.deleteId, 1);
+  }
+
+  checkout(){
+    if(_.size(this.cart) <= 0){
+      this.snackBar.open('Atleast add one product before checkout', 'Error');     
+      return;
+    }
+     this.nextStep();
+  }
+
+  getAddress($event){
+    if(_.size(this.cart)<=0){
+      this.snackBar.open('Atleast add one product before checkout', 'Error');
+      this.prevStep();
+      return;
+    }
+    let placeOrderDetails = {
+      address: $event,
+      cart: this.cart
+    }
+
+    this.productManagementService.placeOrder(placeOrderDetails)
+      .subscribe(res =>{
+        if(res['invoiceId'])
+        this.router.navigate(['/admin/order-confirmation'], { queryParams: { order:  res['invoiceId']} });
+        console.log(res);
+      })
+    console.log("Address", placeOrderDetails);
   }
 
 }

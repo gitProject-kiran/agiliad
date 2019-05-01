@@ -5,6 +5,7 @@ import { MainPageComponent } from 'src/app/admin/main-page/main-page.component';
 import { DashboardComponent } from 'src/app/admin/dashboard/dashboard.component';
 import { AddProductsComponent } from 'src/app/admin/add-products/add-products.component';
 import { CustomerOrderComponent } from 'src/app/admin/customer-order/customer-order.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 
 const routes: Routes = [{
   path:  '',
@@ -21,7 +22,11 @@ const routes: Routes = [{
   },{
     path:  'order',
     component:  CustomerOrderComponent,
-    data: { breadcrumb: 'Dashboard'} 
+    data: { breadcrumb: 'order'} 
+  },{
+    path:  'order-confirmation',
+    component:  OrderConfirmationComponent,
+    data: { breadcrumb: 'order-confirmation'} 
   },{ 
     path: '**', 
     redirectTo: 'dashboard' 

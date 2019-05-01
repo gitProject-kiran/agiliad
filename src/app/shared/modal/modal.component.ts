@@ -9,6 +9,7 @@ import { Input } from '@angular/core';
 })
 export class ModalComponent implements OnInit {
   @Input() dialogClass: string;
+  @Input() headerClass: string;
   @Input() hideHeader: boolean = false;
   @Input() hideFooter: boolean = false;
   @Input() closeBackdrop: boolean = true;

@@ -58,7 +58,6 @@
     text-shadow: none;
 }
 
-
 .modal-header{
     background: #3f51b5 !important;
     color: #f8f9fa  !important;
@@ -66,4 +65,12 @@
     border-top-left-radius: 0%;
     border-top-right-radius: 0%;
   }
+
+.modal-delete{
+    background: #f15e5e !important;
+    color: #f8f9fa  !important;
+    font-weight: bold  !important;
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+  }  
 

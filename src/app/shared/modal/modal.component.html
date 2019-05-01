@@ -2,7 +2,7 @@
      [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
   <div class="modal-dialog" [ngClass]="dialogClass" style="margin-top: 80px;">
     <div class="modal-content">
-      <div *ngIf="!hideHeader" class="modal-header">
+      <div *ngIf="!hideHeader" class="modal-header" [ngClass]="headerClass">
         <ng-content select=".app-modal-header"></ng-content>
       </div>
       <div class="modal-body">

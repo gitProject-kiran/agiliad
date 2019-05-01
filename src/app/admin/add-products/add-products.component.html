@@ -102,7 +102,7 @@
 </div>
 
 <!-- Add model popup -->
-<app-modal #addModel [dialogClass]="'modal-md'" [closeBackdrop]="false" [hideFooter]="true" style="margin-top: 80px;">
+<app-modal #addModel [dialogClass]="'modal-md'" [headerClass]="'modal-header'" [closeBackdrop]="false" [hideFooter]="true" style="margin-top: 80px;">
   <div class="app-modal-header">
     <h6 class="modal-title">Add Model</h6>
     <button type="button" class="close basic-close" (click)="resetModelForm(addModel, addModelForm)" style="color:white;top:15px;">
